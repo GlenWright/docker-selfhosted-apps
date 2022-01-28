@@ -11,7 +11,6 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - "./rules:/rules:ro"
       - "./letsencrypt:/letsencrypt"
     environment:
       SCALEWAY_API_TOKEN: /run/secrets/SCALEWAY_API_TOKEN
@@ -53,6 +52,12 @@ services:
     configs:
       - source: traefik_yml
         target: ./traefik.yml
+        
+      - source: tls_yml
+        target: ./rules/tls.yml
+        
+      - source: whitelist_yml
+        target: ./rules/whitelist.yml   
 
   socket-proxy:
     image: tecnativa/docker-socket-proxy
@@ -74,6 +79,10 @@ networks:
 
 configs:
   traefik_yml:
+    external: true
+  tls_yml:
+    external: true
+  whitelist_yml:
     external: true
     
 secrets:
