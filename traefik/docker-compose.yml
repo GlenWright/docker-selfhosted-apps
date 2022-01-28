@@ -11,7 +11,6 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - "./traefik.yml:/traefik.yml:ro"
       - "./rules:/rules:ro"
       - "./letsencrypt:/letsencrypt"
     environment:
@@ -45,6 +44,10 @@ services:
 
       # Watchtower Update
       - "com.centurylinklabs.watchtower.enable=true"
+      
+    configs:
+      traefik_yml:
+        file: ./traefik.yml
 
   socket-proxy:
     image: tecnativa/docker-socket-proxy
