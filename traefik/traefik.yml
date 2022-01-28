@@ -15,12 +15,12 @@ providers:
     watch: true
 
 certificatesResolvers:
-  mydnschallenge:
+  dns:
     acme:
-      email: mail@example.com
+      email: infrastructure@simplyepic.co.uk
       storage: ./letsencrypt/acme.json
       dnsChallenge:
-        provider: ovh
+        provider: scaleway
         delayBeforeCheck: 10
 
 log:
