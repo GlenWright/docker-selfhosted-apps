@@ -14,10 +14,15 @@ services:
       - "./rules:/rules:ro"
       - "./letsencrypt:/letsencrypt"
     environment:
-      - OVH_ENDPOINT=${OVH_ENDPOINT}
-      - OVH_APPLICATION_KEY=${OVH_APPLICATION_KEY}
-      - OVH_APPLICATION_SECRET=${OVH_APPLICATION_SECRET}
-      - OVH_CONSUMER_KEY=${OVH_CONSUMER_KEY}
+      SCALEWAY_API_TOKEN: /run/secrets/SCALEWAY_API_TOKEN
+      SCALEWAY_PROJECT_ID: /run/secrets/SCALEWAY_PROJECT_ID
+      DOMAIN: /run/secrets/domain
+      TLD: /run/secrets/tld
+    secrets:
+      - SCALEWAY_API_TOKEN
+      - SCALEWAY_PROJECT_ID
+      - domain
+      - tld
     networks:
       - proxy
     labels:
@@ -46,8 +51,8 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
       
     configs:
-      traefik_yml:
-        file: ./traefik.yml
+      - source: traefik_yml
+        target: ./traefik.yml
 
   socket-proxy:
     image: tecnativa/docker-socket-proxy
@@ -65,4 +70,18 @@ services:
 
 networks:
   proxy:
+    external: true
+
+configs:
+  traefik_yml:
+    external: true
+    
+secrets:
+  SCALEWAY_API_TOKEN:
+    external: true
+  SCALEWAY_PROJECT_ID:
+    external: true
+  domain:
+    external: true
+  tld:
     external: true
