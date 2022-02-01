@@ -100,5 +100,5 @@ volumes:
     driver_opts:
       type: nfs
       o: addr=192.168.2.200
-      device: :/mnt/shared/proxmox/traefik/
+      device: :/mnt/shared/proxmox/traefik
   
