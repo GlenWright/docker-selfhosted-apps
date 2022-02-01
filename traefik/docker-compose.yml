@@ -10,6 +10,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
     environment:
       SCALEWAY_API_TOKEN: /run/secrets/SCALEWAY_API_TOKEN
       SCALEWAY_PROJECT_ID: /run/secrets/SCALEWAY_PROJECT_ID
