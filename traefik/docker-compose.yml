@@ -11,7 +11,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - "./letsencrypt:/letsencrypt"
+      - traefik:/traefik
     environment:
       SCALEWAY_API_TOKEN: /run/secrets/SCALEWAY_API_TOKEN
       SCALEWAY_PROJECT_ID: /run/secrets/SCALEWAY_PROJECT_ID
@@ -94,3 +94,11 @@ secrets:
     external: true
   tld:
     external: true
+    
+volumes:
+  traefik:
+    driver_opts:
+      type: nfs
+      o: addr=192.168.2.200
+      device: :/shared/proxmox/traefik/
+  
